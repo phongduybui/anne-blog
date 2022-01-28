@@ -7,7 +7,7 @@ const Hero = () => {
     <div className="pb-16 flex justify-between items-center">
       <div className="text-6xl font-black text-semi-black">
         <p className="mb-4 ">
-          Hi, I'm <span className="text-primary">Hoang An</span>.
+          Hi, I'm <span className="text-primary">Anne</span>.
         </p>
         <p className="mb-8">English Student</p>
         <h2 className=" text-secondary text-[19px] mb-8">
