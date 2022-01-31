@@ -11,8 +11,9 @@ const Button = ({ children, className, bordered }: Props) => {
   return (
     <button
       className={clsx(
-        'py-3 px-8 text-base font-medium text-white bg-primary rounded-full hover:bg-secondary',
-        bordered && 'bg-gray-400',
+        'py-3 px-9 text-base font-medium text-white bg-primary rounded-full hover:bg-secondary',
+        bordered &&
+          'bg-gray-400 bg-gray text-secondary border-2 border-inherit hover:bg-gray hover:border-primary',
         className
       )}
     >

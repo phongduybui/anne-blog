@@ -1,11 +1,17 @@
+import clsx from 'clsx';
 import React from 'react';
 
 interface Props {
   children: React.ReactNode;
+  className?: string;
 }
 
-const Container = ({ children }: Props) => {
-  return <div className="container mx-auto px-16">{children}</div>;
+const Container = ({ children, className }: Props) => {
+  return (
+    <div className={clsx('w-full min-w-full mx-auto px-16 ', className)}>
+      {children}
+    </div>
+  );
 };
 
 export default Container;
