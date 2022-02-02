@@ -1,4 +1,4 @@
 export const getImagePath = (path?: string) => {
   if (!path) return '/images/placeholder.png';
-  return `http://168.138.168.68${path}`;
+  return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`;
 };

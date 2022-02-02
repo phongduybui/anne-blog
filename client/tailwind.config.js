@@ -10,7 +10,7 @@ module.exports = {
         'semi-black': '#2d3748',
         secondary: '#718096',
         'semi-gray': '#f8f8f8',
-        'gray-primary': '#E2E8F1',
+        gray: '#E2E8F1',
         'gray-light': '#a0aec0',
       },
     },

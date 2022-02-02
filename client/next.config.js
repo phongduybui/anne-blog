@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['168.138.168.68'],
+    domains: [process.env.NEXT_PUBLIC_SERVER_DOMAIN],
   },
 };
 
