@@ -12,8 +12,16 @@ import Tag from './common/Tag';
 import SocialIcon from './common/SocialIcon';
 import Button from './common/Button';
 import Pagination from 'rc-pagination';
+import { GetStaticProps } from 'next';
+import { request } from '../services/request';
+import { Article } from '../pages/articles/[id]';
+import Link from 'next/link';
 
-const PrimaryContent = () => {
+interface Props {
+  articles?: Article[];
+}
+
+const PrimaryContent = ({ articles }: Props) => {
   return (
     <Container className="bg-semi-gray py-16">
       <div className="grid grid-cols-12 gap-16">
@@ -22,8 +30,12 @@ const PrimaryContent = () => {
             Recently Published
           </h2>
           <div className="flex flex-col">
-            {[...new Array(8)].map((_, i) => (
-              <ArticleCard key={i} />
+            {articles?.map((article) => (
+              <Link href={`/articles/${article.id}`} key={article.id}>
+                <a>
+                  <ArticleCard article={article} />
+                </a>
+              </Link>
             ))}
           </div>
           <Pagination
@@ -62,12 +74,12 @@ const PrimaryContent = () => {
 
           <div className="mb-14">
             <h2 className=" font-bold text-2xl text-secondary pl-8 mb-14">
-              Let's Talk
+              Let&apos;s Talk
             </h2>
             <div className="bg-white p-8 rounded-md">
               <p className="text-secondary">
                 Want to find out how I can solve problems specific to your
-                business? Let's talk.
+                business? Let&apos;s talk.
               </p>
               <div className="flex justify-center flex-wrap space-x-2 mt-4">
                 <SocialIcon icon={<RiFacebookCircleFill />} />

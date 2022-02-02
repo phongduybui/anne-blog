@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { BiMenu, BiSearch } from 'react-icons/bi';
 import Container from './Container';
+import Link from 'next/link';
 
 const Header = () => {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -9,11 +10,13 @@ const Header = () => {
     <Container className="shadow">
       <nav className="py-8 bg-white border-gray-200 rounded dark:bg-gray-800">
         <div className=" flex flex-wrap justify-between items-center">
-          <a href="#" className="flex">
-            <span className="self-center font-bold text-primary text-3xl whitespace-nowrap dark:text-white">
-              Anne.
-            </span>
-          </a>
+          <Link href="/">
+            <a className="flex">
+              <span className="self-center font-bold text-primary text-3xl whitespace-nowrap dark:text-white">
+                Anne.
+              </span>
+            </a>
+          </Link>
           <div className="flex md:order-2">
             <div className=" relative mr-3 md:mr-0 md:block">
               <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -22,7 +25,7 @@ const Header = () => {
               <input
                 type="text"
                 id="email-adress-icon"
-                className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none border-secondary"
+                className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none border-secondary"
                 placeholder="Search..."
               />
             </div>

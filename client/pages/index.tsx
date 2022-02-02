@@ -1,13 +1,16 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
-import Container from '../components/layout/Container';
-import Footer from '../components/layout/Footer';
-import Header from '../components/layout/Header';
 import Hero from '../components/layout/Hero';
 import PrimaryContent from '../components/PrimaryContent';
+import { request } from '../services/request';
+import { Article } from './articles/[id]';
+import qs from 'qs';
 
-const Home: NextPage = () => {
+interface Props {
+  articles?: Article[];
+}
+
+const Home = ({ articles }: Props) => {
   return (
     <div>
       <Head>
@@ -16,9 +19,43 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero />
-      <PrimaryContent />
+      <PrimaryContent articles={articles} />
     </div>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const query = qs.stringify(
+      {
+        populate: {
+          author: {
+            populate: ['picture'],
+          },
+          image: '*',
+          category: '*',
+        },
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    const { data: res } = await request.get(`/articles?${query}`);
+    const articles = res.data;
+    console.log({ articles });
+    return {
+      props: {
+        articles,
+      },
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      props: {
+        articles: null,
+      },
+    };
+  }
 };
 
 export default Home;
