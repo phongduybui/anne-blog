@@ -1,7 +1,11 @@
 import moment from 'moment';
 
+function removeSpaces(s: string) {
+  return s.replace(/\s/g, '');
+}
+
 export const getReadingTime = (title: string, content: string) => {
-  const wordCount = title?.length + content?.length;
+  const wordCount = removeSpaces(title).length + removeSpaces(content).length;
   return `${(wordCount / 200).toFixed()} min`;
 };
 

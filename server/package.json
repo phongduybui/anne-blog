@@ -7,7 +7,8 @@
     "lodash.set": "^4.3.2",
     "mime-types": "^2.1.27",
     "mysql": "2.18.1",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "strapi-plugin-wysiwyg-toastui": "^0.1.5"
   },
   "name": "anne-blog",
   "private": true,

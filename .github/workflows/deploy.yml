@@ -26,6 +26,8 @@ jobs:
             cd client/
             yarn install
             yarn build
+            pm2 restart anne-blog-client
             cd ../server/
             yarn install
             yarn build
+            pm2 restart blog-admin
