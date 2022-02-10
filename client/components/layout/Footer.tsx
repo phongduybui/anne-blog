@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="col-span-4">
           <h3 className="mb-2 text-secondary">Contact Me</h3>
 
-          <div className="bg-white flex flex-col  rounded-md">
+          <div className="bg-white flex flex-col text-secondary rounded-md">
             <div className="flex items-center">
               <MdEmail className="mr-2 text-secondary" />{' '}
               levohoangan.01@gmail.com

@@ -3,14 +3,25 @@ import Head from 'next/head';
 import Hero from '../components/layout/Hero';
 import PrimaryContent from '../components/PrimaryContent';
 import { request } from '../services/request';
-import { Article } from './articles/[id]';
+import { Article } from './articles/[slug]';
 import qs from 'qs';
+
+export interface Category {
+  id: number;
+  attributes: {
+    name: string;
+    slug: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
 
 interface Props {
   articles?: Article[];
+  categories: Category[];
 }
 
-const Home = ({ articles }: Props) => {
+const Home = ({ articles, categories }: Props) => {
   return (
     <div>
       <Head>
@@ -19,7 +30,7 @@ const Home = ({ articles }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero />
-      <PrimaryContent articles={articles} />
+      <PrimaryContent articles={articles} categories={categories} />
     </div>
   );
 };
@@ -40,13 +51,14 @@ export const getStaticProps: GetStaticProps = async () => {
         encodeValuesOnly: true,
       }
     );
-    const { data: res } = await request.get(`/articles?${query}`);
-    const articles = res.data;
-    console.log({ articles });
+    const { data: articles } = await request.get(`/articles?${query}`);
+    const { data: categories } = await request.get('/categories');
     return {
       props: {
-        articles,
+        articles: articles.data,
+        categories: categories.data,
       },
+      revalidate: 10,
     };
   } catch (e) {
     console.log(e);

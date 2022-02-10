@@ -14,24 +14,29 @@ import Button from './common/Button';
 import Pagination from 'rc-pagination';
 import { GetStaticProps } from 'next';
 import { request } from '../services/request';
-import { Article } from '../pages/articles/[id]';
+import { Article } from '../pages/articles/[slug]';
 import Link from 'next/link';
+import { Category } from '../pages';
 
 interface Props {
   articles?: Article[];
+  categories?: Category[];
 }
 
-const PrimaryContent = ({ articles }: Props) => {
+const PrimaryContent = ({ articles, categories }: Props) => {
   return (
     <Container className="bg-semi-gray py-16">
       <div className="grid grid-cols-12 gap-16">
-        <div className="col-span-8">
+        <div className="col-span-12 md:col-span-8">
           <h2 className="border-l-8 border-gray font-bold text-2xl text-semi-black pl-8 mb-12">
             Recently Published
           </h2>
           <div className="flex flex-col">
             {articles?.map((article) => (
-              <Link href={`/articles/${article.id}`} key={article.id}>
+              <Link
+                href={`/articles/${article.attributes.slug}`}
+                key={article.id}
+              >
                 <a>
                   <ArticleCard article={article} />
                 </a>
@@ -44,7 +49,7 @@ const PrimaryContent = ({ articles }: Props) => {
             total={450}
           />
         </div>
-        <div className="col-span-4">
+        <div className="hidden col-span-4 md:block">
           <div className="mb-14">
             <h2 className=" font-bold text-2xl text-secondary pl-8 mb-14">
               Topics
@@ -64,9 +69,9 @@ const PrimaryContent = ({ articles }: Props) => {
               Tags
             </h2>
             <div className="flex flex-wrap ">
-              {[...new Array(8)].map((_, i) => (
-                <Tag hashtag className="mr-2 mb-2" key={i}>
-                  tutorial
+              {categories?.map((category) => (
+                <Tag hashtag className="mr-2 mb-2" key={category.id}>
+                  {category.attributes.name}
                 </Tag>
               ))}
             </div>

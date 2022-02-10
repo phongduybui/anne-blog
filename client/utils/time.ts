@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const getReadingTime = (title: string, content: string) => {
-  const wordCount = title.length + content.length;
+  const wordCount = title?.length + content?.length;
   return `${(wordCount / 200).toFixed()} min`;
 };
 
