@@ -154,3 +154,5 @@ client/.vercel
 
 # typescript
 /*.tsbuildinfo
+
+**/node_modules
