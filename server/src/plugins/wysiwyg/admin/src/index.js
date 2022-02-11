@@ -2,6 +2,7 @@
 
 import pluginPkg from "../../package.json";
 import Wysiwyg from "./components/Wysiwyg";
+import Initializer from "./components/Initializer";
 import pluginId from "./pluginId";
 
 const name = pluginPkg.strapi.name;
@@ -12,6 +13,7 @@ export default {
 
     app.registerPlugin({
       id: pluginId,
+      initializer: Initializer,
       isReady: true,
       name,
     });

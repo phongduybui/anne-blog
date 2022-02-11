@@ -1,13 +1,12 @@
 /* eslint-disable react/no-children-prop */
 import Image from 'next/image';
 import Container from '../../components/layout/Container';
-import ReactMarkdown from 'react-markdown';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { request } from '../../services/request';
 import { getImagePath } from '../../utils/image';
 import { formatTime, getReadingTime } from '../../utils/time';
 import Breadcrumb from '../../components/common/Breadcrumb';
-import remarkGfm from 'remark-gfm';
+import SanitizeHTML from '../../components/SanitizeHTML';
 
 export interface Article {
   id: number;
@@ -116,11 +115,8 @@ const ArticlePage = ({ article }: { article: Article }) => {
           </div>
         </div>
         {/* Article Content */}
-        <div className="">
-          <ReactMarkdown
-            children={articleData?.content}
-            remarkPlugins={[remarkGfm]}
-          />
+        <div>
+          <SanitizeHTML dirtyHtml={articleData?.content} />
         </div>
       </div>
     </Container>
