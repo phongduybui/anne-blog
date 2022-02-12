@@ -4,11 +4,12 @@
     "@strapi/plugin-i18n": "4.0.4",
     "@strapi/plugin-users-permissions": "4.0.4",
     "@strapi/strapi": "4.0.4",
+    "ckeditor5-build-strapi-wysiwyg": "^2.0.0-rc.1",
     "lodash.set": "^4.3.2",
     "mime-types": "^2.1.27",
     "mysql": "2.18.1",
     "slugify": "^1.6.5",
-    "strapi-plugin-wysiwyg-toastui": "^0.1.5"
+    "strapi-plugin-wysiwyg-tui-editor": "^4.0.1"
   },
   "name": "anne-blog",
   "private": true,
