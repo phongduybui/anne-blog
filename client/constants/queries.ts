@@ -19,6 +19,7 @@ export const queryArticles = ({ page, pageSize = 10 }: QueryArticlesParams) => {
         page,
         pageSize,
       },
+      sort: ['publishedAt:desc'],
     },
     {
       encodeValuesOnly: true,
