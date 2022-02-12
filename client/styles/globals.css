@@ -17,3 +17,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.toastui-editor-contents {
+  font-size: 1.1875rem !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.hero-img-container > span {
+  min-height: 100%;
+}

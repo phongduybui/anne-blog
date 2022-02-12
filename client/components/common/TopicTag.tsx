@@ -5,7 +5,7 @@ interface Props {
 
 const TopicTag = ({ icon, topic }: Props) => {
   return (
-    <div className="rounded-2xl flex items-center bg-white mb-4 text-secondary cursor-pointer">
+    <div className="rounded-2xl shadow hover:scale-105 duration-300 flex items-center bg-white mb-4 text-secondary cursor-pointer">
       <div className="bg-gray rounded-l-2xl p-4 text-xl hover:bg-primary hover:text-white">
         {icon}
       </div>

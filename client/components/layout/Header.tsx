@@ -3,16 +3,46 @@ import clsx from 'clsx';
 import { BiMenu, BiSearch } from 'react-icons/bi';
 import Container from './Container';
 import Link from 'next/link';
+import Hero from './Hero';
+import { ROUTES } from '../../constants/routes';
+import Image from 'next/image';
 
-const Header = () => {
+interface Props {
+  isHome?: boolean;
+}
+
+const Header = ({ isHome }: Props) => {
   const [showNavbar, setShowNavbar] = useState(false);
   return (
-    <Container className="shadow">
-      <nav className="py-8 bg-white border-gray-200 rounded dark:bg-gray-800">
+    <Container
+      className={clsx(
+        'shadow',
+        isHome && 'flex flex-col min-h-screen relative'
+        // bg-[url('/images/bg-sky.jpg')]  bg-fixed bg-no-repeat bg-cover
+      )}
+    >
+      {isHome && (
+        <div className="absolute inset-0 -z-50 hero-img-container">
+          <Image
+            src="/images/bg-sky.jpg"
+            alt="img"
+            width={1400}
+            height={350}
+            // layout="responsive"
+            objectFit="cover"
+          />
+        </div>
+      )}
+      <nav className="py-8 border-gray-200 rounded dark:bg-gray-800">
         <div className=" flex flex-wrap justify-between items-center">
           <Link href="/">
             <a className="flex">
-              <span className="self-center font-bold text-primary text-3xl whitespace-nowrap dark:text-white">
+              <span
+                className={clsx(
+                  'self-center font-bold text-primary text-3xl whitespace-nowrap',
+                  isHome && '!text-gray'
+                )}
+              >
                 Anne.
               </span>
             </a>
@@ -20,12 +50,15 @@ const Header = () => {
           <div className="flex md:order-2">
             <div className=" relative mr-3 md:mr-0 md:block">
               <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                <BiSearch className="text-secondary" />
+                <BiSearch className="text-[#bbb]" />
               </div>
               <input
                 type="text"
                 id="email-adress-icon"
-                className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none border-secondary"
+                className={clsx(
+                  'block p-2 pl-10 w-full rounded-lg border sm:text-sm focus:ring-blue-500 focus:border-blue-500 outline-none border-gray-light',
+                  isHome && 'bg-transparent !border-[#bbb] !text-[#bbb]'
+                )}
                 placeholder="Search..."
               />
             </div>
@@ -48,35 +81,25 @@ const Header = () => {
             id="mobile-menu-3"
           >
             <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-base md:font-medium">
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-                  aria-current="page"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Contact
-                </a>
-              </li>
+              {ROUTES.map((route) => (
+                <li key={route.label}>
+                  <Link href={route.path}>
+                    <a
+                      className={clsx(
+                        'block py-2 pr-4 pl-3 text-secondary border-b md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0',
+                        isHome && 'text-gray md:hover:text-slate-400'
+                      )}
+                    >
+                      {route.label}
+                    </a>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </nav>
+      {isHome && <Hero />}
     </Container>
   );
 };

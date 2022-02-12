@@ -1,42 +1,59 @@
 import { GetStaticProps } from 'next';
-import QueryString from 'qs';
-import React from 'react';
+import qs from 'qs';
+import React, { useState } from 'react';
 import PrimaryContent from '../../components/PrimaryContent';
-import { request } from '../../services/request';
+import { fetcher, request } from '../../services/request';
 import { Article } from './[slug]';
-import { Category } from '../index';
+import { Category, Data } from '../index';
+import useSWR from 'swr';
+import { queryArticles } from '../../constants/queries';
 
 interface Props {
-  articles?: Article[];
-  categories: Category[];
+  articles: Data<Article[]>;
+  categories: Data<Category[]>;
 }
 
 const ArticlesPage = ({ articles, categories }: Props) => {
-  return <PrimaryContent articles={articles} categories={categories} />;
+  const [page, setPage] = useState(1);
+  const query = queryArticles({ page });
+
+  const { data: articlesData } = useSWR<Data<Article[]>>(
+    `/articles?${query}`,
+    fetcher,
+    {
+      fallbackData: articles,
+    }
+  );
+  const { data: categoriesData } = useSWR<Data<Category[]>>(
+    '/categories',
+    fetcher,
+    {
+      fallbackData: categories,
+    }
+  );
+
+  const onPageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  return (
+    <PrimaryContent
+      articlesData={articlesData}
+      categoriesData={categoriesData}
+      page={page}
+      onPageChange={onPageChange}
+    />
+  );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const query = QueryString.stringify(
-    {
-      populate: {
-        author: {
-          populate: ['picture'],
-        },
-        image: '*',
-        category: '*',
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  );
-  const { data: res } = await request.get(`/articles?${query}`);
-  const articles = res.data;
+  const query = queryArticles({ page: 1 });
+  const { data: articles } = await request.get(`/articles?${query}`);
   const { data: categories } = await request.get('/categories');
   return {
     props: {
       articles,
-      categories: categories.data,
+      categories,
     },
     revalidate: 10,
   };

@@ -12,22 +12,21 @@ interface Props {
 
 const ArticleCard = ({ article }: Props) => {
   const articleData = article?.attributes;
-  // console.log(articleData);
 
   return (
-    <div className="bg-white flex items-center p-2 m-2 rounded-md hover:-translate-y-1 hover:shadow-md linear duration-300 cursor-pointer">
-      <div className="w-[220px] h-[180px]">
+    <div className="bg-white shadow-md flex items-center p-3 m-2 rounded-md hover:-translate-y-1 hover:shadow-lg linear duration-300 cursor-pointer">
+      <div className="w-[220px] h-[190px]">
         <Image
           src={getImagePath(articleData?.image?.data?.attributes?.url)}
           alt="img"
           width={220}
-          height={180}
+          height={190}
           objectFit="cover"
           layout="fixed"
           className="rounded-md "
         />
       </div>
-      <div className="flex flex-col items-start ml-4 p-4">
+      <div className="flex flex-col items-start ml-4 px-4">
         <Tag className="capitalize">
           {articleData?.category?.data?.attributes?.name ?? 'Freestyle'}
         </Tag>
@@ -41,7 +40,7 @@ const ArticleCard = ({ article }: Props) => {
           <Avatar
             src={getImagePath(
               articleData?.author?.data?.attributes?.picture?.data?.attributes
-                ?.url
+                ?.formats?.thumbnail?.url
             )}
           />
           <div className="flex flex-col justify-center pl-4 ">

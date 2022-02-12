@@ -6,7 +6,8 @@ import { request } from '../../services/request';
 import { getImagePath } from '../../utils/image';
 import { formatTime, getReadingTime } from '../../utils/time';
 import Breadcrumb from '../../components/common/Breadcrumb';
-import SanitizeHTML from '../../components/SanitizeHTML';
+import MarkdownViewer from '../../components/MarkdownViewer';
+import useSWR from 'swr';
 
 export interface Article {
   id: number;
@@ -19,22 +20,33 @@ export interface Article {
     updatedAt: string;
     publishedAt: string;
     author: Author;
-    image: {
-      data: {
-        attributes: {
-          url: string;
-          formats: {
-            thumbnail: {
-              url: string;
-            };
-          };
-        };
-      };
-    };
+    image: Image;
     category: {
       data: {
         attributes: {
           name: string;
+        };
+      };
+    };
+  };
+}
+
+interface Image {
+  data: {
+    attributes: {
+      url: string;
+      formats: {
+        thumbnail: {
+          url: string;
+        };
+        small: {
+          url: string;
+        };
+        medium: {
+          url: string;
+        };
+        large: {
+          url: string;
         };
       };
     };
@@ -46,13 +58,7 @@ export interface AttributesAuthor {
   email: string;
   createdAt: Date;
   updatedAt: Date;
-  picture: {
-    data: {
-      attributes: {
-        url: string;
-      };
-    };
-  };
+  picture: Image;
 }
 
 export interface Author {
@@ -64,8 +70,9 @@ export interface Author {
 
 const ArticlePage = ({ article }: { article: Article }) => {
   const articleData = article?.attributes;
+
   return (
-    <Container className="bg-semi-gray py-16">
+    <Container className="bg-semi-gray py-16 ">
       <Breadcrumb className="mb-4">
         <Breadcrumb.Item href="/articles">Articles</Breadcrumb.Item>
         <Breadcrumb.Item href={`/articles/${articleData?.slug}`} isCurrent>
@@ -75,18 +82,19 @@ const ArticlePage = ({ article }: { article: Article }) => {
         </Breadcrumb.Item>
       </Breadcrumb>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center shadow-sm relative">
+        <div className="absolute inset-0 z-50 bg-slate-900 opacity-20 rounded-t-3xl" />
         <Image
           src={getImagePath(articleData?.image?.data?.attributes?.url)}
           alt="img"
           width={1400}
-          height={450}
+          height={350}
           // layout="responsive"
           objectFit="cover"
-          className="rounded-t-2xl"
+          className="rounded-t-3xl"
         />
       </div>
-      <div className="bg-white py-8 px-16">
+      <div className="bg-white py-8 px-16 shadow-sm">
         {/* Article Info */}
         <div className="mb-16">
           <h1 className="font-black text-5xl text-semi-black mb-4">
@@ -115,8 +123,8 @@ const ArticlePage = ({ article }: { article: Article }) => {
           </div>
         </div>
         {/* Article Content */}
-        <div>
-          <SanitizeHTML dirtyHtml={articleData?.content} />
+        <div id="viewer">
+          <MarkdownViewer content={articleData?.content} />
         </div>
       </div>
     </Container>
@@ -133,8 +141,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
   });
 
-  console.log(paths);
-
   return {
     paths,
     fallback: false,
@@ -145,10 +151,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { data: res } = await request.get(
     `/articles?filters[slug][$eq]=${context.params?.slug}&populate=*`
   );
-  console.log({ data: res.data?.[0] });
   return {
     props: {
       article: res.data?.[0],
+      fallback: {
+        '/test': [1, 1, 1, 4],
+      },
     },
     revalidate: 10,
   };

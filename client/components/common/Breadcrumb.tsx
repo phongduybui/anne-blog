@@ -17,8 +17,8 @@ const Item = ({ href = '/', children, isCurrent }: ItemProps) => {
         <Link href={href}>
           <a
             className={clsx(
-              'ml-1 text-sm font-medium text-gray-light  hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white',
-              isCurrent && 'text-black'
+              'ml-1 text-sm font-medium text-slate-400 hover:text-slate-600 md:ml-2',
+              isCurrent && 'text-slate-900'
             )}
           >
             {children}
@@ -40,7 +40,7 @@ const Breadcrumb = ({ children, className }: BreadcrumbProps) => {
       <ol className="inline-flex items-center space-x-1 md:space-x-3">
         <li className="inline-flex items-center">
           <Link href="/">
-            <a className="inline-flex items-center text-sm text-gray-light hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+            <a className="inline-flex items-center text-sm text-slate-400 hover:text-slate-600">
               <MdHome className="mr-2 w-4 h-4" />
               Home
             </a>

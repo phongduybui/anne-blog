@@ -12,20 +12,37 @@ import Tag from './common/Tag';
 import SocialIcon from './common/SocialIcon';
 import Button from './common/Button';
 import Pagination from 'rc-pagination';
-import { GetStaticProps } from 'next';
-import { request } from '../services/request';
 import { Article } from '../pages/articles/[slug]';
 import Link from 'next/link';
-import { Category } from '../pages';
+import { Category, Data } from '../pages';
+import { useRef, useState } from 'react';
 
 interface Props {
-  articles?: Article[];
-  categories?: Category[];
+  articlesData?: Data<Article[]>;
+  categoriesData?: Data<Category[]>;
+  page: number;
+  onPageChange: (page: number) => void;
 }
 
-const PrimaryContent = ({ articles, categories }: Props) => {
+const PrimaryContent = ({
+  articlesData,
+  categoriesData,
+  onPageChange,
+  page = 1,
+}: Props) => {
+  const articles = articlesData?.data;
+  const categories = categoriesData?.data;
+  const listRef = useRef<HTMLDivElement | null>(null);
+
+  const handlePageChange = (newPage: number) => {
+    onPageChange(newPage);
+    listRef?.current?.scrollIntoView({
+      behavior: 'smooth',
+    });
+  };
+
   return (
-    <Container className="bg-semi-gray py-16">
+    <Container className="bg-semi-gray py-16" containerRef={listRef}>
       <div className="grid grid-cols-12 gap-16">
         <div className="col-span-12 md:col-span-8">
           <h2 className="border-l-8 border-gray font-bold text-2xl text-semi-black pl-8 mb-12">
@@ -44,9 +61,11 @@ const PrimaryContent = ({ articles, categories }: Props) => {
             ))}
           </div>
           <Pagination
-            className="ant-pagination text-right my-4"
-            current={1}
-            total={450}
+            className="ant-pagination text-right !my-6"
+            current={page}
+            onChange={handlePageChange}
+            total={articlesData?.meta?.pagination?.total}
+            pageSize={articlesData?.meta?.pagination?.pageSize}
           />
         </div>
         <div className="hidden col-span-4 md:block">
@@ -81,7 +100,7 @@ const PrimaryContent = ({ articles, categories }: Props) => {
             <h2 className=" font-bold text-2xl text-secondary pl-8 mb-14">
               Let&apos;s Talk
             </h2>
-            <div className="bg-white p-8 rounded-md">
+            <div className="bg-white p-8 rounded-md shadow-sm">
               <p className="text-secondary">
                 Want to find out how I can solve problems specific to your
                 business? Let&apos;s talk.
@@ -98,7 +117,7 @@ const PrimaryContent = ({ articles, categories }: Props) => {
             <h2 className=" font-bold text-2xl text-secondary pl-8 mb-14">
               Newsletter
             </h2>
-            <div className="bg-white p-8 rounded-md">
+            <div className="bg-white p-8 rounded-md shadow-sm">
               <p className="text-secondary mb-4">
                 Make sure to subscribe to our newsletter and be the first to
                 know the news.

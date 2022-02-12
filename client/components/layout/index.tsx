@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -6,9 +7,11 @@ interface Props {
 }
 
 const Layout = ({ children }: Props) => {
+  const router = useRouter();
+
   return (
     <>
-      <Header />
+      <Header isHome={router.pathname === '/'} />
       {children}
       <Footer />
     </>

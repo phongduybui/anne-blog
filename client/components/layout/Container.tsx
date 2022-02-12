@@ -1,14 +1,18 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 
 interface Props {
   children: React.ReactNode;
   className?: string;
+  containerRef?: MutableRefObject<HTMLDivElement | null>;
 }
 
-const Container = ({ children, className }: Props) => {
+const Container = ({ children, className, containerRef }: Props) => {
   return (
-    <div className={clsx('w-full min-w-full mx-auto px-8 sm:px-16', className)}>
+    <div
+      className={clsx('w-full min-w-full mx-auto px-8 sm:px-16', className)}
+      ref={containerRef}
+    >
       {children}
     </div>
   );
