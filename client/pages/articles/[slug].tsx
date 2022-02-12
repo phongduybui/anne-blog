@@ -83,15 +83,20 @@ const ArticlePage = ({ article }: { article: Article }) => {
       </Breadcrumb>
 
       <div className="flex justify-center shadow-sm relative">
-        <div className="absolute inset-0 z-50 bg-slate-900 opacity-20 rounded-t-3xl" />
+        <div className="absolute inset-0 z-50 bg-slate-900 opacity-20 rounded-t-3xl article-hero-image" />
         <Image
+          priority
+          placeholder="blur"
+          blurDataURL={getImagePath(
+            articleData?.image?.data?.attributes?.formats?.medium?.url
+          )}
           src={getImagePath(articleData?.image?.data?.attributes?.url)}
           alt="img"
           width={1400}
           height={350}
           // layout="responsive"
           objectFit="cover"
-          className="rounded-t-3xl"
+          className="rounded-t-3xl transition duration-500  ease-in-out"
         />
       </div>
       <div className="bg-white py-8 px-16 shadow-sm">

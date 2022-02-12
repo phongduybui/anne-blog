@@ -26,3 +26,7 @@ a {
 .hero-img-container > span {
   min-height: 100%;
 }
+
+.article-hero-image:hover ~ span img {
+  transform: scale(1.05);
+}

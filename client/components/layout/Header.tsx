@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Hero from './Hero';
 import { ROUTES } from '../../constants/routes';
 import Image from 'next/image';
+import bgSkyImage from '../../public/images/bg-sky.jpg';
 
 interface Props {
   isHome?: boolean;
@@ -24,7 +25,9 @@ const Header = ({ isHome }: Props) => {
       {isHome && (
         <div className="absolute inset-0 -z-50 hero-img-container">
           <Image
-            src="/images/bg-sky.jpg"
+            placeholder="blur"
+            priority
+            src={bgSkyImage}
             alt="img"
             width={1400}
             height={350}

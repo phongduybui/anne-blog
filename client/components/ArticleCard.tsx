@@ -17,6 +17,10 @@ const ArticleCard = ({ article }: Props) => {
     <div className="bg-white shadow-md flex items-center p-3 m-2 rounded-md hover:-translate-y-1 hover:shadow-lg linear duration-300 cursor-pointer">
       <div className="w-[220px] h-[190px]">
         <Image
+          placeholder="blur"
+          blurDataURL={getImagePath(
+            articleData?.image?.data?.attributes?.formats?.medium?.url
+          )}
           src={getImagePath(articleData?.image?.data?.attributes?.url)}
           alt="img"
           width={220}
@@ -39,6 +43,10 @@ const ArticleCard = ({ article }: Props) => {
         <div className="flex mt-4">
           <Avatar
             src={getImagePath(
+              articleData?.author?.data?.attributes?.picture?.data?.attributes
+                ?.formats?.small?.url
+            )}
+            blurDataURL={getImagePath(
               articleData?.author?.data?.attributes?.picture?.data?.attributes
                 ?.formats?.thumbnail?.url
             )}

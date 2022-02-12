@@ -2,12 +2,15 @@ import Image from 'next/image';
 
 interface Props {
   src: string;
+  blurDataURL: string;
 }
 
-const Avatar = ({ src }: Props) => {
+const Avatar = ({ src, blurDataURL }: Props) => {
   return (
     <div className="rounded-full w-[48px] h-[48px]">
       <Image
+        placeholder="blur"
+        blurDataURL={blurDataURL}
         src={src}
         alt="img"
         width={'100%'}

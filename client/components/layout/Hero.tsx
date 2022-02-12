@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import Button from '../common/Button';
+import anImage from '../../public/images/an.jpg';
 
 const Hero = () => {
   return (
@@ -20,7 +21,9 @@ const Hero = () => {
       </div>
 
       <Image
-        src="/images/an.jpg"
+        priority
+        placeholder="blur"
+        src={anImage}
         alt="personal-avatar"
         width={360}
         height={360}
