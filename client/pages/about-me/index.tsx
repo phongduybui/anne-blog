@@ -35,9 +35,14 @@ const AboutMe = () => {
               </p>
 
               <div className="pt-12 pb-8">
-                <button className="bg-primary hover:bg-[#344cb8] text-white font-bold py-2 px-4 rounded-full">
+                <a
+                  href="https://drive.google.com/file/d/17FSYgiB4INf2wRYoqNV6GNTiwpTrn10t/view?usp=sharing"
+                  target="_blank"
+                  className="bg-primary hover:bg-[#344cb8] text-white font-bold py-2 px-4 rounded-full"
+                  rel="noreferrer"
+                >
                   GET MY CV
-                </button>
+                </a>
               </div>
 
               <div className="pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-center lg:justify-start space-x-12">
