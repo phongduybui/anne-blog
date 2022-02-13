@@ -30,3 +30,8 @@ a {
 .article-hero-image:hover ~ span img {
   transform: scale(1.05);
 }
+
+.toastui-editor-contents p,
+td {
+  color: #4a5568;
+}

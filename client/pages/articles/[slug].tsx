@@ -146,10 +146,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
   });
 
-  return {
-    paths,
-    fallback: false,
-  };
+  return { paths, fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -159,9 +156,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       article: res.data?.[0],
-      fallback: {
-        '/test': [1, 1, 1, 4],
-      },
     },
     revalidate: 10,
   };
