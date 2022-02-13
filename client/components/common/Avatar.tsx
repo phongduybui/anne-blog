@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
 interface Props {
-  src: string;
-  blurDataURL: string;
+  src: string | StaticImageData;
+  blurDataURL?: string;
   size?: number;
 }
 

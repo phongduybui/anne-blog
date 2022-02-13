@@ -7,6 +7,7 @@ import Hero from './Hero';
 import { ROUTES } from '../../constants/routes';
 import Image from 'next/image';
 import bgSkyImage from '../../public/images/bg-sky.jpg';
+import SearchBox from '../SearchBox';
 
 interface Props {
   isHome?: boolean;
@@ -51,20 +52,7 @@ const Header = ({ isHome }: Props) => {
             </a>
           </Link>
           <div className="flex md:order-2">
-            <div className=" relative mr-3 md:mr-0 md:block">
-              <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                <BiSearch className="text-[#bbb]" />
-              </div>
-              <input
-                type="text"
-                id="email-adress-icon"
-                className={clsx(
-                  'block p-2 pl-10 w-full rounded-lg border sm:text-sm focus:ring-blue-500 focus:border-blue-500 outline-none border-gray-light',
-                  isHome && 'bg-transparent !border-[#bbb] !text-[#bbb]'
-                )}
-                placeholder="Search..."
-              />
-            </div>
+            <SearchBox isHome={isHome} />
             <button
               data-collapse-toggle="mobile-menu-3"
               type="button"

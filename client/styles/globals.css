@@ -33,5 +33,17 @@ a {
 
 .toastui-editor-contents p,
 td {
-  color: #4a5568;
+  color: #3b4352 !important;
+}
+
+.toastui-editor-contents strong {
+  color: #444444;
+}
+
+.search-input:focus ~ .search-results {
+  display: block;
+}
+
+.search-results:hover {
+  display: block !important;
 }

@@ -4,11 +4,11 @@ export const ROUTES = [
     label: 'Home',
   },
   {
-    path: '/#',
+    path: '/about-me',
     label: 'About',
   },
   {
-    path: '/#',
+    path: '/contact',
     label: 'Contact',
   },
 ];

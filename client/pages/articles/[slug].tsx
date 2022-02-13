@@ -13,18 +13,12 @@ import {
   queryRelatedArticles,
   querySingleArticle,
 } from '../../constants/queries';
-import SocialIcon from '../../components/common/SocialIcon';
-import {
-  RiAdvertisementFill,
-  RiFacebookCircleFill,
-  RiInstagramFill,
-  RiYoutubeFill,
-} from 'react-icons/ri';
+import { RiAdvertisementFill } from 'react-icons/ri';
 import TopicTag from '../../components/common/TopicTag';
 import { MdOutlineDocumentScanner, MdTipsAndUpdates } from 'react-icons/md';
 import Link from 'next/link';
-import ArticleCard from '../../components/ArticleCard';
 import MiniArticleCard from '../../components/MiniArticleCard';
+import SocialGroup from '../../components/SocialGroup';
 
 export interface Article {
   id: number;
@@ -97,7 +91,6 @@ interface Props {
 
 const ArticlePage = ({ article, relatedArticles }: Props) => {
   const articleData = article?.attributes;
-  console.log(articleData);
   return (
     <Container className="bg-semi-gray pt-16 pb-36">
       <Breadcrumb className="mb-4">
@@ -165,7 +158,7 @@ const ArticlePage = ({ article, relatedArticles }: Props) => {
         </div>
         <div className="hidden col-span-4 md:block">
           <div className="rounded-3xl bg-white  text-center shadow">
-            <div className="px-8 py-4 w-full bg-[url('/images/bg-sky-crop.jpg')]  bg-fixed bg-no-repeat bg-cover rounded-3xl">
+            <div className="px-8 py-4 w-full bg-[url('/images/bg-sky-crop.jpg')]  bg-fixed bg-no-repeat bg-cover rounded-t-3xl">
               <Avatar
                 src={getImagePath(
                   articleData?.author?.data?.attributes?.picture?.data
@@ -186,19 +179,16 @@ const ArticlePage = ({ article, relatedArticles }: Props) => {
                 {articleData?.author?.data?.attributes?.email}
               </p>
               <div className="flex justify-center flex-wrap space-x-2 mt-3">
-                <SocialIcon
-                  href={articleData?.author?.data?.attributes?.social?.facebook}
-                  icon={<RiFacebookCircleFill />}
-                />
-                <SocialIcon
-                  href={articleData?.author?.data?.attributes?.social?.youtube}
-                  icon={<RiYoutubeFill />}
-                />
-                <SocialIcon
-                  href={
+                <SocialGroup
+                  facebook={
+                    articleData?.author?.data?.attributes?.social?.facebook
+                  }
+                  youtube={
+                    articleData?.author?.data?.attributes?.social?.youtube
+                  }
+                  insta={
                     articleData?.author?.data?.attributes?.social?.instagram
                   }
-                  icon={<RiInstagramFill />}
                 />
               </div>
             </div>
@@ -256,13 +246,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const query = querySingleArticle(context.params?.slug);
   const { data: res } = await request.get(`/articles?${query}`);
 
-  const category = res.data?.[0]?.attributes?.category?.attributes?.name;
+  const category = res.data?.[0]?.attributes?.category?.data?.attributes?.name;
 
   const queryRelated = queryRelatedArticles(category);
 
   const { data: relatedArticles } = await request.get(
     `/articles?${queryRelated}`
   );
+
   return {
     props: {
       article: res.data?.[0],

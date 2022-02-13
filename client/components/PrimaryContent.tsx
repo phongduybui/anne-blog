@@ -1,21 +1,16 @@
 import ArticleCard from './ArticleCard';
 import TopicTag from './common/TopicTag';
 import Container from './layout/Container';
-import {
-  RiAdvertisementFill,
-  RiYoutubeFill,
-  RiFacebookCircleFill,
-  RiInstagramFill,
-} from 'react-icons/ri';
+import { RiAdvertisementFill } from 'react-icons/ri';
 import { MdOutlineDocumentScanner, MdTipsAndUpdates } from 'react-icons/md';
 import Tag from './common/Tag';
-import SocialIcon from './common/SocialIcon';
 import Button from './common/Button';
 import Pagination from 'rc-pagination';
 import { Article, Author } from '../pages/articles/[slug]';
 import Link from 'next/link';
 import { Category, Data } from '../pages';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
+import SocialGroup from './SocialGroup';
 
 interface Props {
   articlesData?: Data<Article[]>;
@@ -107,18 +102,11 @@ const PrimaryContent = ({
                 Want to find out how I can solve problems specific to your
                 business? Let&apos;s talk.
               </p>
-              <div className="flex justify-center flex-wrap space-x-2 mt-4">
-                <SocialIcon
-                  href={author?.data?.attributes?.social?.facebook}
-                  icon={<RiFacebookCircleFill />}
-                />
-                <SocialIcon
-                  href={author?.data?.attributes?.social?.youtube}
-                  icon={<RiYoutubeFill />}
-                />
-                <SocialIcon
-                  href={author?.data?.attributes?.social?.instagram}
-                  icon={<RiInstagramFill />}
+              <div className="mt-4">
+                <SocialGroup
+                  facebook={author?.data?.attributes?.social?.facebook}
+                  youtube={author?.data?.attributes?.social?.youtube}
+                  insta={author?.data?.attributes?.social?.instagram}
                 />
               </div>
             </div>

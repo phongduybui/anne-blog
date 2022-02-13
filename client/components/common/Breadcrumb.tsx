@@ -18,7 +18,7 @@ const Item = ({ href = '/', children, isCurrent }: ItemProps) => {
           <a
             className={clsx(
               'ml-1 text-sm font-medium text-slate-400 hover:text-slate-600 md:ml-2',
-              isCurrent && 'text-slate-900'
+              isCurrent && 'text-slate-500'
             )}
           >
             {children}

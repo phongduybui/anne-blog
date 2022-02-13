@@ -77,3 +77,30 @@ export const queryRelatedArticles = (category: string) => {
     }
   );
 };
+
+export const queryArticlesByTerm = (term: string) => {
+  return QueryString.stringify(
+    {
+      filters: {
+        title: {
+          $containsi: term,
+        },
+      },
+      populate: {
+        author: {
+          populate: ['picture'],
+        },
+        image: '*',
+        category: '*',
+      },
+      pagination: {
+        start: 0,
+        limit: 6,
+      },
+      sort: ['publishedAt:desc'],
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+};
