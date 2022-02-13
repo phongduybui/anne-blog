@@ -9,6 +9,6 @@ export const getReadingTime = (title: string, content: string) => {
   return `${(wordCount / 200).toFixed()} min`;
 };
 
-export const formatTime = (time: string) => {
-  return moment(time).format('LL');
+export const formatTime = (time: string, format: string = 'LL') => {
+  return moment(time).format(format);
 };

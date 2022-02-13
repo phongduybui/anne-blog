@@ -26,3 +26,54 @@ export const queryArticles = ({ page, pageSize = 10 }: QueryArticlesParams) => {
     }
   );
 };
+
+export const querySingleArticle = (slug?: string | string[]) => {
+  return QueryString.stringify(
+    {
+      filters: {
+        slug: {
+          $eq: slug,
+        },
+      },
+      populate: {
+        author: {
+          populate: ['picture'],
+        },
+        image: '*',
+        category: '*',
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+};
+
+export const queryRelatedArticles = (category: string) => {
+  return QueryString.stringify(
+    {
+      filters: {
+        category: {
+          name: {
+            $eq: category,
+          },
+        },
+      },
+      populate: {
+        author: {
+          populate: ['picture'],
+        },
+        image: '*',
+        category: '*',
+      },
+      pagination: {
+        start: 0,
+        limit: 6,
+      },
+      sort: ['publishedAt:desc'],
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+};

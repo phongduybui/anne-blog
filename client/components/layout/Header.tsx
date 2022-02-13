@@ -17,7 +17,7 @@ const Header = ({ isHome }: Props) => {
   return (
     <Container
       className={clsx(
-        'shadow',
+        'shadow-md',
         isHome && 'flex flex-col min-h-screen relative'
         // bg-[url('/images/bg-sky.jpg')]  bg-fixed bg-no-repeat bg-cover
       )}

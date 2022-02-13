@@ -3,21 +3,20 @@ import Image from 'next/image';
 interface Props {
   src: string;
   blurDataURL: string;
+  size?: number;
 }
 
-const Avatar = ({ src, blurDataURL }: Props) => {
+const Avatar = ({ src, blurDataURL, size = 48 }: Props) => {
   return (
-    <div className="rounded-full w-[48px] h-[48px]">
-      <Image
-        placeholder="blur"
-        blurDataURL={blurDataURL}
-        src={src}
-        alt="img"
-        width={'100%'}
-        height={'100%'}
-        className="rounded-full opacity-90 hover:opacity-100 !border-2 !border-gray !border-solid"
-      />
-    </div>
+    <Image
+      placeholder="blur"
+      blurDataURL={blurDataURL}
+      src={src}
+      alt="img"
+      width={size}
+      height={size}
+      className="rounded-full opacity-90 hover:opacity-100 !border-2 !border-gray !border-solid"
+    />
   );
 };
 

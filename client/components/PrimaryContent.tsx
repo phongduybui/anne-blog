@@ -12,7 +12,7 @@ import Tag from './common/Tag';
 import SocialIcon from './common/SocialIcon';
 import Button from './common/Button';
 import Pagination from 'rc-pagination';
-import { Article } from '../pages/articles/[slug]';
+import { Article, Author } from '../pages/articles/[slug]';
 import Link from 'next/link';
 import { Category, Data } from '../pages';
 import { useRef, useState } from 'react';
@@ -22,6 +22,7 @@ interface Props {
   categoriesData?: Data<Category[]>;
   page: number;
   onPageChange: (page: number) => void;
+  author: Author;
 }
 
 const PrimaryContent = ({
@@ -29,6 +30,7 @@ const PrimaryContent = ({
   categoriesData,
   onPageChange,
   page = 1,
+  author,
 }: Props) => {
   const articles = articlesData?.data;
   const categories = categoriesData?.data;
@@ -106,9 +108,18 @@ const PrimaryContent = ({
                 business? Let&apos;s talk.
               </p>
               <div className="flex justify-center flex-wrap space-x-2 mt-4">
-                <SocialIcon icon={<RiFacebookCircleFill />} />
-                <SocialIcon icon={<RiYoutubeFill />} />
-                <SocialIcon icon={<RiInstagramFill />} />
+                <SocialIcon
+                  href={author?.data?.attributes?.social?.facebook}
+                  icon={<RiFacebookCircleFill />}
+                />
+                <SocialIcon
+                  href={author?.data?.attributes?.social?.youtube}
+                  icon={<RiYoutubeFill />}
+                />
+                <SocialIcon
+                  href={author?.data?.attributes?.social?.instagram}
+                  icon={<RiInstagramFill />}
+                />
               </div>
             </div>
           </div>

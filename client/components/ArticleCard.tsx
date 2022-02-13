@@ -4,7 +4,8 @@ import Tag from './common/Tag';
 import { BsClock } from 'react-icons/bs';
 import { Article } from '../pages/articles/[slug]';
 import { getImagePath } from '../utils/image';
-import { formatTime, getReadingTime } from '../utils/time';
+import { formatTime } from '../utils/time';
+import readingTime from 'reading-time';
 
 interface Props {
   article: Article;
@@ -61,7 +62,7 @@ const ArticleCard = ({ article }: Props) => {
               <span className="px-2">-</span>
               <span className="flex items-center">
                 <BsClock className="mr-2" />{' '}
-                {getReadingTime(articleData?.title, articleData?.content)}
+                {readingTime(articleData?.content)?.text}
               </span>
             </div>
           </div>

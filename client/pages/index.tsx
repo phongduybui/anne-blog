@@ -2,8 +2,7 @@ import type { GetStaticProps } from 'next';
 import Head from 'next/head';
 import PrimaryContent from '../components/PrimaryContent';
 import { fetcher, request } from '../services/request';
-import { Article } from './articles/[slug]';
-import qs from 'qs';
+import { Article, Author } from './articles/[slug]';
 import useSWR from 'swr';
 import { useState } from 'react';
 import { queryArticles } from '../constants/queries';
@@ -32,9 +31,10 @@ export interface Data<T> {
 interface Props {
   articles: Data<Article[]>;
   categories: Data<Category[]>;
+  author: Author;
 }
 
-const Home = ({ articles, categories }: Props) => {
+const Home = ({ articles, categories, author }: Props) => {
   const [page, setPage] = useState(1);
   const query = queryArticles({ page });
 
@@ -67,6 +67,7 @@ const Home = ({ articles, categories }: Props) => {
       <PrimaryContent
         articlesData={articlesData}
         categoriesData={categoriesData}
+        author={author}
         onPageChange={onPageChange}
         page={page}
       />
@@ -79,10 +80,12 @@ export const getStaticProps: GetStaticProps = async () => {
     const query = queryArticles({ page: 1 });
     const { data: articles } = await request.get(`/articles?${query}`);
     const { data: categories } = await request.get('/categories');
+    const { data: author } = await request.get('/writers/1');
     return {
       props: {
         articles,
         categories,
+        author,
       },
       revalidate: 10,
     };
