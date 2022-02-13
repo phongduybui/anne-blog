@@ -1,13 +1,14 @@
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
-import debounce from 'lodash.debounce';
 import { request } from '../services/request';
 import { queryArticlesByTerm } from '../constants/queries';
 import { Article } from '../pages/articles/[slug]';
 import { Data } from '../pages';
 import MiniArticleCard from './MiniArticleCard';
 import Link from 'next/link';
+import Spinner from './common/Spinner';
+import Image from 'next/image';
 
 interface Props {
   isHome?: boolean;
@@ -15,34 +16,38 @@ interface Props {
 
 const SearchBox = ({ isHome }: Props) => {
   const [term, setTerm] = useState('');
+  const [debouncedTerm, setDebouncedTerm] = useState('');
+  const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
 
   const handleTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTerm(e.target.value.trim());
+    setTerm(e.target.value);
   };
 
-  const fetchArticles = async (term: string, cb: Function) => {
+  const fetchArticles = (term: string) => {
     const query = queryArticlesByTerm(term);
-    const res = await request.get<Data<Article[]>>(`/articles?${query}`);
-    cb(res);
+    setLoading(true);
+    request.get<Data<Article[]>>(`/articles?${query}`).then((res) => {
+      setArticles(res.data?.data);
+      setLoading(false);
+    });
   };
-
-  const debouncedFetchArticles = debounce((term: string, cb: Function) => {
-    fetchArticles(term, cb);
-  }, 500);
 
   useEffect(() => {
-    if (term) {
-      debouncedFetchArticles(term, (res: any) => {
-        setArticles(res?.data?.data);
-      });
+    const timer = setTimeout(() => {
+      setDebouncedTerm(term);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [term]);
+
+  useEffect(() => {
+    if (debouncedTerm) {
+      fetchArticles(debouncedTerm.trim());
     } else {
       setArticles([]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [term]);
-
-  console.log(articles);
+  }, [debouncedTerm]);
 
   return (
     <>
@@ -60,10 +65,16 @@ const SearchBox = ({ isHome }: Props) => {
           )}
           placeholder="Search..."
         />
-        {articles?.length > 0 && (
-          <div className="hidden z-50 absolute top-12 -left-32 right-0 py-4 px-6 bg-gray shadow-md rounded-md search-results max-h-[460px] overflow-y-auto">
-            <h3 className="ml-2">{`Results: ${articles.length} items`}</h3>
-            {articles.map((article) => (
+
+        <div className="hidden z-50 absolute top-12 -left-32 right-0 py-4 px-6 bg-gray shadow-md rounded-md search-results max-h-[460px] overflow-y-auto">
+          <h3 className="ml-2 mb-2">{`Results: ${articles.length} items`}</h3>
+          {loading && (
+            <div className="flex justify-center my-4">
+              <Spinner />
+            </div>
+          )}
+          {articles.length > 0 ? (
+            articles.map((article) => (
               <Link
                 href={`/articles/${article.attributes.slug}`}
                 key={article.id}
@@ -72,9 +83,18 @@ const SearchBox = ({ isHome }: Props) => {
                   <MiniArticleCard article={article} />
                 </a>
               </Link>
-            ))}
-          </div>
-        )}
+            ))
+          ) : (
+            <div className="ml-2 flex justify-center">
+              <Image
+                width={600}
+                height={300}
+                src="/images/empty.png"
+                alt="empty"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
