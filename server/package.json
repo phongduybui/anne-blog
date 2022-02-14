@@ -3,6 +3,7 @@
     "@strapi/plugin-graphql": "^4.0.0",
     "@strapi/plugin-i18n": "4.0.4",
     "@strapi/plugin-users-permissions": "4.0.4",
+    "@strapi/provider-email-nodemailer": "^4.0.7",
     "@strapi/strapi": "4.0.4",
     "ckeditor5-build-strapi-wysiwyg": "^2.0.0-rc.1",
     "lodash.set": "^4.3.2",
