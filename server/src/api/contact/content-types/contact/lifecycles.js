@@ -29,7 +29,7 @@ module.exports = {
           <p style="color: #869af4;">
             (*) You can also check it out in Contacts section of
             <a
-              href="http://anne-admin.fashionz.codes/admin/content-manager/collectionType/api::contact.contact?page=1&pageSize=10&sort=name:ASC"
+              href="http://admin.hoangann.me/admin/content-manager/collectionType/api::contact.contact?page=1&pageSize=10&sort=name:ASC"
               target="_blank"
               >admin area here!</a
             >
