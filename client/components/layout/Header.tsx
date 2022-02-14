@@ -8,6 +8,7 @@ import { ROUTES } from '../../constants/routes';
 import Image from 'next/image';
 import bgSkyImage from '../../public/images/bg-sky.jpg';
 import SearchBox from '../SearchBox';
+import { useRouter } from 'next/router';
 
 interface Props {
   isHome?: boolean;
@@ -15,6 +16,8 @@ interface Props {
 
 const Header = ({ isHome }: Props) => {
   const [showNavbar, setShowNavbar] = useState(false);
+  const { pathname } = useRouter();
+
   return (
     <Container
       className={clsx(
@@ -37,18 +40,24 @@ const Header = ({ isHome }: Props) => {
           />
         </div>
       )}
-      <nav className="py-8 border-gray-200 rounded dark:bg-gray-800">
+      <nav className="py-8 border-gray-200 rounded">
         <div className=" flex flex-wrap justify-between items-center">
           <Link href="/">
             <a className="flex">
-              <span
+              {/* <span
                 className={clsx(
                   'self-center font-bold text-primary text-3xl whitespace-nowrap',
                   isHome && '!text-gray'
                 )}
               >
                 Anne.
-              </span>
+              </span> */}
+              <Image
+                src={`/images/logo-${isHome ? 'white' : 'default'}.svg`}
+                alt="logo"
+                width={180}
+                height={40}
+              />
             </a>
           </Link>
           <div className="flex md:order-2">
@@ -57,7 +66,7 @@ const Header = ({ isHome }: Props) => {
               data-collapse-toggle="mobile-menu-3"
               type="button"
               onClick={() => setShowNavbar(!showNavbar)}
-              className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
               aria-controls="mobile-menu-3"
               aria-expanded="false"
             >
@@ -78,7 +87,9 @@ const Header = ({ isHome }: Props) => {
                     <a
                       className={clsx(
                         'block py-2 pr-4 pl-3 text-secondary border-b md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0',
-                        isHome && 'text-gray md:hover:text-slate-400'
+                        isHome && 'text-gray md:hover:text-slate-400',
+                        route.path === pathname &&
+                          '!text-primary md:border-b-2 md:pb-1 md:border-b-primary '
                       )}
                     >
                       {route.label}

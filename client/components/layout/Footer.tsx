@@ -1,15 +1,35 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { MdEmail, MdPhone } from 'react-icons/md';
 import Button from '../common/Button';
+import SocialGroup from '../SocialGroup';
 import Container from './Container';
 
 const Footer = () => {
   return (
-    <Container className="bg-semi-black py-6">
-      <div className="grid grid-cols-12 gap-4">
+    <Container className="bg-semi-black lg:pt-4 pb-4 flex items-center lg:justify-between justify-center flex-col lg:flex-row space-y-3 pt-3 lg:space-y-0">
+      <Link href="/">
+        <a>
+          <Image
+            src="/images/logo-default.svg"
+            alt="logo"
+            width={180}
+            height={40}
+          />
+        </a>
+      </Link>
+      <p className="text-slate-300 text-sm">
+        Copyright © 2022 Anne. All Right Reserved.
+      </p>
+      <SocialGroup size="medium" />
+      {/* <div className="grid grid-cols-12 gap-4">
         <div className="col-span-4">
-          <h2 className="font-bold text-primary text-2xl whitespace-nowrap dark:text-white">
-            Anne.
-          </h2>
+          <Image
+            src="/images/logo-default.svg"
+            alt="logo"
+            width={180}
+            height={40}
+          />
           <p className="text-slate-300 text-base">
             Copyright © 2022 Anne. All Right Reserved.
           </p>
@@ -41,7 +61,7 @@ const Footer = () => {
             <Button className="rounded-md ml-2 py-2 ">Subscribe</Button>
           </div>
         </div>
-      </div>
+      </div> */}
     </Container>
   );
 };

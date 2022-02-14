@@ -207,21 +207,25 @@ const ArticlePage = ({ article, relatedArticles }: Props) => {
             </div>
           </div>
           <div className="mt-14 mb-2 sticky top-7">
-            <h2 className="text-center font-bold text-2xl text-secondary  mb-8">
-              Related Articles
-            </h2>
-            <div className="flex flex-col space-y-0">
-              {relatedArticles?.map((article) => (
-                <Link
-                  href={`/articles/${article.attributes.slug}`}
-                  key={article.id}
-                >
-                  <a>
-                    <MiniArticleCard article={article} />
-                  </a>
-                </Link>
-              ))}
-            </div>
+            {relatedArticles?.length > 0 && (
+              <>
+                <h2 className="text-center font-bold text-2xl text-secondary  mb-8">
+                  Related Articles
+                </h2>
+                <div className="flex flex-col space-y-0">
+                  {relatedArticles?.map((article) => (
+                    <Link
+                      href={`/articles/${article.attributes.slug}`}
+                      key={article.id}
+                    >
+                      <a>
+                        <MiniArticleCard article={article} />
+                      </a>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -247,8 +251,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { data: res } = await request.get(`/articles?${query}`);
 
   const category = res.data?.[0]?.attributes?.category?.data?.attributes?.name;
+  const currentArticleId = res.data?.[0]?.id;
 
-  const queryRelated = queryRelatedArticles(category);
+  const queryRelated = queryRelatedArticles(category, currentArticleId);
 
   const { data: relatedArticles } = await request.get(
     `/articles?${queryRelated}`

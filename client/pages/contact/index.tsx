@@ -1,15 +1,54 @@
+import { useState } from 'react';
 import Container from '../../components/layout/Container';
+import { request } from '../../services/request';
+import { toast } from 'react-toastify';
 
-{
-  /* <link rel="stylesheet" href="https://cdn.tailgrids.com/tailgrids-fallback.css" /> */
-}
 const Contact = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const clearForm = () => {
+    setMessage('');
+    setError('');
+  };
+
+  const handleSubmitForm = () => {
+    if (!message || !email) {
+      setError('Message and email are required');
+      return;
+    }
+    setLoading(true);
+    request
+      .post('/contacts', {
+        data: {
+          name,
+          email,
+          phone,
+          message,
+        },
+      })
+      .then(() => {
+        clearForm();
+        toast.success(
+          'Successfully submitted your information. I will reply soon!'
+        );
+      })
+      .catch((err) => setError(err?.message))
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <Container className="bg-semi-gray">
       <section className="bg-semi-gray  py-10 lg:py-[80px]  relative z-10">
         <div className="container">
           <div className="flex flex-wrap lg:justify-between -mx-4">
-            <div className="w-full lg:w-1/2 xl:w-6/12 px-4">
+            <div className="w-full lg:w-1/2 xl:w-6/12 px-4 flex items-center">
               <div className="max-w-[570px] mb-12 lg:mb-0">
                 <span className="block mb-4 text-base text-primary font-semibold">
                   Contact Us
@@ -41,6 +80,8 @@ const Contact = () => {
                     <input
                       type="text"
                       placeholder="Your Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       className="
                           w-full
                           rounded
@@ -58,6 +99,8 @@ const Contact = () => {
                     <input
                       type="email"
                       placeholder="Your Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className="
                           w-full
                           rounded
@@ -75,6 +118,8 @@ const Contact = () => {
                     <input
                       type="text"
                       placeholder="Your Phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                       className="
                           w-full
                           rounded
@@ -92,23 +137,16 @@ const Contact = () => {
                     <textarea
                       rows={6}
                       placeholder="Your Message"
-                      className="
-                          w-full
-                          rounded
-                          py-3
-                          px-[14px]
-                          text-body-color text-base
-                          border border-gray-light
-                          resize-none
-                          outline-none
-                          focus-visible:shadow-none
-                          focus:border-primary
-                          "
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      className=" w-full rounded py-3 px-[14px] text-body-color text-base border border-gray-light resize-none outline-none focus-visible:shadow-none focus:border-primary"
                     ></textarea>
                   </div>
                   <div>
                     <button
                       type="button"
+                      onClick={handleSubmitForm}
+                      disabled={loading}
                       className="
                           w-full
                           text-white
@@ -120,8 +158,9 @@ const Contact = () => {
                           hover:bg-opacity-90
                           "
                     >
-                      Send Message
+                      {loading ? 'Submitting...' : 'Send Message'}
                     </button>
+                    {error && <p className="text-red-600 pt-3">{error}</p>}
                   </div>
                 </form>
                 <div>

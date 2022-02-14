@@ -1,5 +1,11 @@
 import Image from 'next/image';
-import { MdHome, MdWork } from 'react-icons/md';
+import {
+  FiBriefcase,
+  FiCalendar,
+  FiMail,
+  FiMapPin,
+  FiPhoneCall,
+} from 'react-icons/fi';
 import Avatar from '../../components/common/Avatar';
 import SocialGroup from '../../components/SocialGroup';
 import personalImage from '../../public/images/an_2.jpg';
@@ -15,20 +21,32 @@ const AboutMe = () => {
           >
             <div className="p-4 md:p-12 text-center lg:text-left">
               <div className="block lg:hidden mx-auto ">
-                <Avatar src={personalImage} size={192} />
+                <Avatar src={personalImage} size={192} objectFit="cover" />
               </div>
 
               <h1 className="text-3xl font-bold pt-8 lg:pt-0">
                 Lê Võ Hoàng An
               </h1>
               <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
-              <p className="pt-4 text-base font-normal flex items-center justify-center lg:justify-start">
-                <MdWork className="text-primary mr-2" />
-                Student
+              <p className="pt-2 text-gray-600 text-base lg:text-base flex items-center justify-center lg:justify-start">
+                <FiBriefcase className="text-primary mr-2 text-xl" />
+                Major: English Language
               </p>
               <p className="pt-2 text-gray-600 text-base lg:text-base flex items-center justify-center lg:justify-start">
-                <MdHome className="text-primary mr-1 text-xl" />
-                Home town: Quang Tri
+                <FiCalendar className="text-primary mr-2 text-xl" />
+                2001
+              </p>
+              <p className="pt-2 text-gray-600 text-base lg:text-base flex items-center justify-center lg:justify-start">
+                <FiMapPin className="text-primary mr-2 text-xl" />
+                Quang Tri
+              </p>
+              <p className="pt-2 text-gray-600 text-base lg:text-base flex items-center justify-center lg:justify-start">
+                <FiPhoneCall className="text-primary mr-2 text-xl" />
+                0868303246
+              </p>
+              <p className="pt-2 text-gray-600 text-base lg:text-base flex items-center justify-center lg:justify-start">
+                <FiMail className="text-primary mr-2 text-xl" />
+                levohoangan.01@gmail.com
               </p>
               <p className="pt-8 text-sm">
                 “You only live once, but if you do it right, once is enough.”
@@ -54,7 +72,7 @@ const AboutMe = () => {
           <div className="w-full lg:w-2/5 hidden lg:block shadow-2xl">
             <Image
               width={360}
-              height={530}
+              height={550}
               placeholder="blur"
               src={personalImage}
               className="rounded-none lg:rounded-lg shadow-2xl"

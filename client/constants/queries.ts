@@ -49,7 +49,10 @@ export const querySingleArticle = (slug?: string | string[]) => {
   );
 };
 
-export const queryRelatedArticles = (category: string) => {
+export const queryRelatedArticles = (
+  category: string,
+  currArticleId: number
+) => {
   return QueryString.stringify(
     {
       filters: {
@@ -57,6 +60,9 @@ export const queryRelatedArticles = (category: string) => {
           name: {
             $eq: category,
           },
+        },
+        id: {
+          $ne: currArticleId,
         },
       },
       populate: {

@@ -10,13 +10,15 @@ const Hero = () => {
         <p className="mb-4 text-gray">
           Hi, I&apos;m <span className="text-[#d1ff10]">Anne</span>.
         </p>
-        <p className="mb-8 text-gray">English Student</p>
+        <p className="mb-8 text-gray text-5xl">English Language Student</p>
         <h2 className=" text-slate-300 text-[19px] mb-8">
           “You only live once, but if you do it right, once is enough.”
         </h2>
         <div className="flex justify-betweeen space-x-4 my-6">
-          <Button>Contact Me</Button>
-          <Button bordered>About Me</Button>
+          <Button href="/contact">Contact Me</Button>
+          <Button href="/about-me" bordered>
+            About Me
+          </Button>
         </div>
       </div>
 
