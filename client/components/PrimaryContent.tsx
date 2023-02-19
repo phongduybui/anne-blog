@@ -62,7 +62,7 @@ const PrimaryContent = ({
             current={page}
             onChange={handlePageChange}
             total={articlesData?.meta?.pagination?.total}
-            pageSize={articlesData?.meta?.pagination?.pageSize}
+            pageSize={articlesData?.meta?.pagination?.pageSize || 10}
           />
         </div>
         <div className="hidden col-span-4 md:block">

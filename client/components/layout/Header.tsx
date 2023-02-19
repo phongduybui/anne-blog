@@ -35,7 +35,7 @@ const Header = ({ isHome }: Props) => {
             alt="img"
             width={1400}
             height={350}
-            // layout="responsive"
+            layout="responsive"
             objectFit="cover"
           />
         </div>
